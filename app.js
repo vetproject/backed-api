@@ -23,9 +23,9 @@ app.get("/test-db", (req, res) => {
 
 // Create a new user
 app.post("/users", (req, res) => {
-  const { name, email, password, role, paid } = req.body;
-  const query = "INSERT INTO users (name, email, password, role, paid) VALUES (?, ?, ?, ?, ?)";
-  db.query(query, [name, email, password, role, paid], (err, result) => {
+  const {id, name, email, password, role, paid } = req.body;
+  const query = "INSERT INTO users (id,name, email, password, role, paid) VALUES (?,?, ?, ?, ?, ?)";
+  db.query(query, id,[name, email, password, role, paid], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(400).json({ error: err.message });
