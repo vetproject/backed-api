@@ -25,7 +25,7 @@ app.get("/test-db", (req, res) => {
 app.post("/users", (req, res) => {
   const {id, name, email, password, role, paid } = req.body;
   const query = "INSERT INTO users (id,name, email, password, role, paid) VALUES (?,?, ?, ?, ?, ?)";
-  db.query(query, id,[name, email, password, role, paid], (err, result) => {
+  db.query(query, [id,name, email, password, role, paid], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(400).json({ error: err.message });
