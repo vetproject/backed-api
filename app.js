@@ -13,10 +13,14 @@ app.get("/", (req, res) => {
 
 app.get("/test-db", (req, res) => {
   db.query("SELECT 1", (err) => {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: err.message });
+    }
     res.json({ message: "MySQL connected ✅" });
   });
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>
