@@ -21,8 +21,29 @@ app.get("/test-db", (req, res) => {
   });
 });
 
+// Create a new user
+app.post("/users", (req, res) => {
+  const { name, email, password, role, paid } = req.body;
+  const query = "INSERT INTO users (name, email, password, role, paid) VALUES (?, ?, ?, ?, ?)";
+  db.query(query, [name, email, password, role, paid], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(400).json({ error: err.message });
+    }
+    res.status(201).json({ id: result.insertId });
+  });
+});
+
+// Get all users
+app.get("/users", (req, res) => {
+  db.query("SELECT * FROM users", (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(results);
+  });
+});
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () =>
-  console.log(`Server running on port ${PORT}`)
-);
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
